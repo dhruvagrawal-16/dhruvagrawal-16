@@ -191,55 +191,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Project card hover effects
-const projectCards = document.querySelectorAll('.project-card');
-
-projectCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-4px)';
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
-    });
-});
-
-// Skill hover effects
-const skills = document.querySelectorAll('.skill');
-
-skills.forEach(skill => {
-    skill.addEventListener('mouseenter', function() {
-        this.style.color = 'var(--accent)';
-    });
-    
-    skill.addEventListener('mouseleave', function() {
-        this.style.color = 'var(--gray)';
-    });
-});
-
-// Project card 3D tilt effect
-const projectCards = document.querySelectorAll('.project-card');
-
-projectCards.forEach(card => {
-    card.addEventListener('mousemove', function(e) {
-        const rect = this.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = (y - centerY) / 20;
-        const rotateY = (centerX - x) / 20;
-        
-        this.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
-    });
-});
-
 // Project card 3D tilt effect
 const projectCards = document.querySelectorAll('.project-card');
 
@@ -284,6 +235,106 @@ const skillsObserver = new IntersectionObserver((entries) => {
 const skillsSection = document.querySelector('#skills');
 if (skillsSection) {
     skillsObserver.observe(skillsSection);
+}
+
+// Magnetic effect on buttons and cards
+const magneticElements = document.querySelectorAll('.btn-primary, .btn-secondary, .contact-card, .nav-cta');
+
+magneticElements.forEach(element => {
+    element.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        this.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+    });
+    
+    element.addEventListener('mouseleave', function() {
+        this.style.transform = 'translate(0, 0)';
+    });
+});
+
+// Parallax effect on scroll for hero
+window.addEventListener('scroll', () => {
+    const scrollY = window.pageYOffset;
+    const hero = document.querySelector('.hero-scene .scene-content');
+    
+    if (hero && scrollY < window.innerHeight) {
+        hero.style.transform = `translateY(${scrollY * 0.3}px)`;
+        hero.style.opacity = 1 - (scrollY / window.innerHeight) * 0.5;
+    }
+});
+
+// Spotlight cursor effect
+document.addEventListener('mousemove', (e) => {
+    const spotlight = document.body;
+    spotlight.style.setProperty('--mouse-x', e.clientX + 'px');
+    spotlight.style.setProperty('--mouse-y', e.clientY + 'px');
+});
+
+// Update spotlight position
+const style = document.createElement('style');
+style.textContent = `
+    body::before {
+        left: var(--mouse-x, 50%);
+        top: var(--mouse-y, 50%);
+        transform: translate(-50%, -50%);
+    }
+`;
+document.head.appendChild(style);
+
+// Typing effect for tagline
+const tagline = document.querySelector('.hero-tagline');
+if (tagline) {
+    const text = tagline.textContent;
+    tagline.textContent = '';
+    tagline.style.opacity = '1';
+    
+    let i = 0;
+    const typeWriter = () => {
+        if (i < text.length) {
+            tagline.textContent += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 50);
+        }
+    };
+    
+    setTimeout(typeWriter, 1000);
+}
+
+// Animate project metrics on scroll
+const metricValues = document.querySelectorAll('.metric-value');
+let metricsAnimated = false;
+
+const metricsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !metricsAnimated) {
+            metricsAnimated = true;
+            metricValues.forEach((metric) => {
+                const text = metric.textContent;
+                const number = parseInt(text);
+                
+                if (!isNaN(number)) {
+                    let current = 0;
+                    const increment = number / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= number) {
+                            metric.textContent = text;
+                            clearInterval(timer);
+                        } else {
+                            metric.textContent = Math.floor(current) + text.replace(/[0-9]/g, '');
+                        }
+                    }, 30);
+                }
+            });
+        }
+    });
+}, { threshold: 0.5 });
+
+const projectsSection = document.querySelector('#projects');
+if (projectsSection) {
+    metricsObserver.observe(projectsSection);
 }
 
 // Console Easter Egg

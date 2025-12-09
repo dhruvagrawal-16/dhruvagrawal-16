@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://Dhruv1605.github.io/dhruvagrawal/sitemap.xml
+Sitemap: https://dhruvagrawal-16.github.io/dhruvagrawal-16/sitemap.xml
