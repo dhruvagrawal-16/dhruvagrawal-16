@@ -220,6 +220,23 @@ body:hover::before {
     text-align: center;
 }
 
+/* IIT Badge */
+.iit-badge {
+    display: block;
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.15), rgba(0, 255, 136, 0.15));
+    border: 1px solid rgba(0, 217, 255, 0.3);
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 0 auto 25px;
+    backdrop-filter: blur(10px);
+    animation: pulse 3s ease-in-out infinite;
+    text-align: center;
+    width: fit-content;
+}
+
 .hero-photo {
     width: 180px;
     height: 180px;
@@ -1043,12 +1060,38 @@ body:hover::before {
     border: 1px solid var(--border);
     border-radius: 8px;
     transition: all 0.4s;
+    position: relative;
+}
+
+.education-card.iit-highlight {
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.08), rgba(0, 255, 136, 0.08));
+    border: 2px solid rgba(0, 217, 255, 0.4);
+    box-shadow: 0 0 30px rgba(0, 217, 255, 0.2);
+}
+
+.iit-badge-small {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, var(--accent), var(--success));
+    color: var(--bg);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .education-card:hover {
     background: rgba(255,255,255,0.05);
     border-color: var(--accent);
     transform: translateY(-2px);
+}
+
+.education-card.iit-highlight:hover {
+    box-shadow: 0 0 40px rgba(0, 217, 255, 0.3);
+    transform: translateY(-4px);
 }
 
 .edu-year {
